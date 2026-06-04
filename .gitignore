@@ -1,0 +1,6 @@
+node_modules/
+bindings/
+build/
+*.wasm
+*.log
+package-lock.json

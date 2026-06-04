@@ -1,0 +1,26 @@
+# Example MBC file used for parser and query checks.
+MODULE DemoModule
+
+TYPE Customer RECORD
+FIELD $customer_id STRING
+FIELD $balance EXTENDER_FLOAT
+
+FUNCTION CalculateBalance($customer_id)
+    IF $customer_id <> null
+        LOG("Loading customer")
+        DATABASE.READ($customer_id)
+        RETURN True
+    ELSE
+        PRINTERR("Missing customer id")
+        RETURN False
+    END
+END
+
+STATEMENT ExportCustomer
+    EXEC_SQL("select * from customer")
+    SOCKET.PUT("ok")
+END
+
+/* Block comment with nested-looking markers.
+   The grammar keeps it as one comment token. */
+RECORD AuditEntry

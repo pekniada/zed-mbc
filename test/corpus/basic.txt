@@ -1,0 +1,59 @@
+==================
+Basic declarations
+==================
+
+MODULE DemoModule
+
+TYPE Customer RECORD
+
+FUNCTION CalculateBalance($customer_id)
+  LOG("Loading")
+  RETURN True
+END
+
+STATEMENT ExportCustomer
+  SOCKET.PUT("ok")
+END
+
+---
+
+(source_file
+  (module_declaration
+    kind: (module_keyword)
+    name: (identifier))
+  (type_declaration
+    kind: (type_keyword)
+    name: (identifier)
+    (record_keyword))
+  (function_declaration
+    kind: (function_keyword)
+    name: (identifier)
+    (parameter_list
+      (variable)))
+  (bare_item
+    (keyword))
+  (bare_item
+    (punctuation))
+  (bare_item
+    (string))
+  (bare_item
+    (punctuation))
+  (bare_item
+    (keyword))
+  (bare_item
+    (constant))
+  (bare_item
+    (keyword))
+  (statement_declaration
+    kind: (statement_keyword)
+    name: (identifier))
+  (bare_item
+    (keyword))
+  (bare_item
+    (punctuation))
+  (bare_item
+    (string))
+  (bare_item
+    (punctuation))
+  (bare_item
+    (keyword)))

@@ -1,0 +1,38 @@
+{
+  "grammars": [
+    {
+      "name": "mbc",
+      "camelcase": "Mbc",
+      "scope": "source.mbc",
+      "path": ".",
+      "file-types": [
+        "s4",
+        "s4h",
+        "s4m"
+      ],
+      "highlights": "languages/mbc/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for Axway MBC",
+    "authors": [
+      {
+        "name": "Codex port for Zed"
+      }
+    ],
+    "links": {
+      "repository": "file:///Users/bravajak/Library/CloudStorage/OneDrive-Tieto/Documents_OneDrive/03_Projects/MBC%20Extension/zed-mbc"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "node": false,
+    "rust": false,
+    "python": false,
+    "go": false,
+    "swift": false,
+    "zig": false
+  }
+}

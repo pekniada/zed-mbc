@@ -1,0 +1,29 @@
+{
+  "name": "tree-sitter-mbc",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar and Zed language extension for Axway MBC.",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "parse": "tree-sitter parse samples/example.s4",
+    "test": "tree-sitter test"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.9"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.mbc",
+      "file-types": [
+        "s4",
+        "s4h",
+        "s4m"
+      ],
+      "highlights": [
+        "languages/mbc/highlights.scm"
+      ]
+    }
+  ]
+}
