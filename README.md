@@ -15,14 +15,12 @@ https://github.com/vilikng/vscode-mbc.
 1. Open Zed.
 2. Open the command palette.
 3. Run `zed: install dev extension`.
-4. Select this folder:
-
-   `/Users/bravajak/Library/CloudStorage/OneDrive-Tieto/Documents_OneDrive/03_Projects/MBC Extension/zed-mbc`
+4. Select this repository folder.
 
 5. Open an `.s4`, `.s4h`, or `.s4m` file.
 
-This extension uses a local `file://` grammar source. Keep this folder in place,
-or update the `repository` values in `extension.toml` if you move it.
+For sharing, clone https://github.com/bravajak/zed-mbc and install the cloned
+folder as a Zed dev extension.
 
 ## Development checks
 

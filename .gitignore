@@ -1,4 +1,5 @@
 node_modules/
+grammars/
 bindings/
 build/
 *.wasm

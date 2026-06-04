@@ -4,8 +4,8 @@ version = "0.1.0"
 schema_version = 1
 authors = ["Vili <https://github.com/vilikng>", "Codex port for Zed"]
 description = "MBC language support for Zed, ported from the VS Code MBC syntax extension."
-repository = "file:///Users/bravajak/Library/CloudStorage/OneDrive-Tieto/Documents_OneDrive/03_Projects/MBC%20Extension/zed-mbc"
+repository = "https://github.com/bravajak/zed-mbc"
 
 [grammars.mbc]
-repository = "file:///Users/bravajak/Library/CloudStorage/OneDrive-Tieto/Documents_OneDrive/03_Projects/MBC%20Extension/zed-mbc"
+repository = "https://github.com/bravajak/zed-mbc.git"
 rev = "main"
