@@ -20,6 +20,10 @@
           "named": true
         },
         {
+          "type": "modifier",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
@@ -45,6 +49,59 @@
         },
         {
           "type": "variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declaration_prefix",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declare_keyword",
+          "named": true
+        },
+        {
+          "type": "public_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration_prefix",
+          "named": true
+        },
+        {
+          "type": "field_keyword",
+          "named": true
+        },
+        {
+          "type": "type_spec",
           "named": true
         }
       ]
@@ -102,11 +159,19 @@
       }
     },
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
+          "type": "declaration_prefix",
+          "named": true
+        },
+        {
           "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "return_type",
           "named": true
         }
       ]
@@ -172,6 +237,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration_prefix",
+          "named": true
+        },
+        {
+          "type": "interface_keyword",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -203,6 +282,10 @@
           "named": true
         },
         {
+          "type": "modifier",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         },
@@ -223,7 +306,7 @@
           "named": true
         },
         {
-          "type": "type",
+          "type": "type_spec",
           "named": true
         },
         {
@@ -271,6 +354,31 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration_prefix",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "return_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type_spec",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -284,6 +392,10 @@
       "types": [
         {
           "type": "bare_item",
+          "named": true
+        },
+        {
+          "type": "field_declaration",
           "named": true
         },
         {
@@ -312,6 +424,10 @@
         },
         {
           "type": "type_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -343,9 +459,13 @@
       }
     },
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
+        {
+          "type": "declaration_prefix",
+          "named": true
+        },
         {
           "type": "parameter_list",
           "named": true
@@ -394,11 +514,72 @@
       }
     },
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
+          "type": "declaration_prefix",
+          "named": true
+        },
+        {
           "type": "record_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_spec",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "record_keyword",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variable_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration_prefix",
+          "named": true
+        },
+        {
+          "type": "type_spec",
+          "named": true
+        },
+        {
+          "type": "variable_keyword",
           "named": true
         }
       ]
@@ -450,7 +631,15 @@
     "named": true
   },
   {
+    "type": "declare_keyword",
+    "named": true
+  },
+  {
     "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "field_keyword",
     "named": true
   },
   {
@@ -459,6 +648,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "interface_keyword",
     "named": true
   },
   {
@@ -471,6 +664,10 @@
     "extra": true
   },
   {
+    "type": "modifier",
+    "named": true
+  },
+  {
     "type": "module_keyword",
     "named": true
   },
@@ -480,6 +677,10 @@
   },
   {
     "type": "operator",
+    "named": true
+  },
+  {
+    "type": "public_keyword",
     "named": true
   },
   {
@@ -504,6 +705,10 @@
   },
   {
     "type": "variable",
+    "named": true
+  },
+  {
+    "type": "variable_keyword",
     "named": true
   },
   {

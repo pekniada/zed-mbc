@@ -2,34 +2,78 @@
 Basic declarations
 ==================
 
-MODULE DemoModule
+DECLARE MODULE INTERFACE DemoModule
 
-TYPE Customer RECORD
+DECLARE RECORD Configuration {
+  DECLARE FIELD $SolutionName STRING;
+}
 
-FUNCTION CalculateBalance($customer_id)
+DECLARE FUNCTION
+CalculateBalance($customer_id RECORD Configuration) RECORD Configuration
+{
+  DECLARE $Config RECORD Configuration;
   LOG("Loading")
   RETURN True
-END
+}
 
-STATEMENT ExportCustomer
+DECLARE STATEMENT
+ExportCustomer IN $Config RECORD Configuration
+{
   SOCKET.PUT("ok")
-END
+}
 
 ---
 
 (source_file
   (module_declaration
+    (declaration_prefix
+      (declare_keyword))
     kind: (module_keyword)
+    (interface_keyword)
     name: (identifier))
-  (type_declaration
-    kind: (type_keyword)
-    name: (identifier)
-    (record_keyword))
+  (record_declaration
+    (declaration_prefix
+      (declare_keyword))
+    kind: (record_keyword)
+    name: (identifier))
+  (bare_item
+    (punctuation))
+  (field_declaration
+    (declaration_prefix
+      (declare_keyword))
+    (field_keyword)
+    name: (variable)
+    (type_spec
+      (type)))
+  (bare_item
+    (punctuation))
+  (bare_item
+    (punctuation))
   (function_declaration
+    (declaration_prefix
+      (declare_keyword))
     kind: (function_keyword)
     name: (identifier)
     (parameter_list
-      (variable)))
+      (variable)
+      (type_spec
+        (record_keyword)
+        (identifier)))
+    (return_type
+      (type_spec
+        (record_keyword)
+        (identifier))))
+  (bare_item
+    (punctuation))
+  (variable_declaration
+    (declaration_prefix
+      (declare_keyword))
+    name: (variable)
+    (type_spec
+      (record_keyword)
+      (identifier)))
+  (bare_item
+    (punctuation))
   (bare_item
     (keyword))
   (bare_item
@@ -43,10 +87,22 @@ END
   (bare_item
     (constant))
   (bare_item
-    (keyword))
+    (punctuation))
   (statement_declaration
+    (declaration_prefix
+      (declare_keyword))
     kind: (statement_keyword)
     name: (identifier))
+  (bare_item
+    (keyword))
+  (bare_item
+    (variable))
+  (bare_item
+    (identifier))
+  (bare_item
+    (identifier))
+  (bare_item
+    (punctuation))
   (bare_item
     (keyword))
   (bare_item
@@ -56,4 +112,4 @@ END
   (bare_item
     (punctuation))
   (bare_item
-    (keyword)))
+    (punctuation)))

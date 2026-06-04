@@ -12,7 +12,6 @@ const KEYWORDS = [
   "CONTAINER",
   "DATABASE",
   "DEBUG",
-  "DECLARE",
   "DETECT_UNPARSED_DATA",
   "ELSE",
   "END",
@@ -32,7 +31,6 @@ const KEYWORDS = [
   "INCLUDE",
   "INFO",
   "INPUT",
-  "INTERFACE",
   "INTO",
   "LOAD",
   "LOADPGM",
@@ -50,7 +48,6 @@ const KEYWORDS = [
   "OUTPUT",
   "PRINT",
   "PRINTERR",
-  "PUBLIC",
   "READ",
   "REGISTER",
   "RELEASE",
@@ -95,6 +92,8 @@ const TYPES = [
 
 const CONSTANTS = ["FALSE", "NULL", "TRUE"];
 
+const MODIFIERS = ["PUBLIC", "INTERFACE"];
+
 const WORD_OPERATORS = [
   "AND",
   "BAND",
@@ -123,18 +122,19 @@ const SYMBOL_OPERATORS = [
   "&",
 ];
 
+const IDENT_START = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_".split("");
+const IDENT_CONTINUE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789-".split("");
+const VARIABLE_CONTINUE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789-".split("");
+const DIGITS = "0123456789".split("");
+
 function ci(value) {
-  return new RegExp(
-    value
-      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      .split("")
-      .map((char) => {
-        if (/[a-z]/i.test(char)) {
-          return `[${char.toLowerCase()}${char.toUpperCase()}]`;
-        }
-        return char;
-      })
-      .join(""),
+  return seq(
+    ...value.split("").map((char) => {
+      if (/[a-z]/i.test(char)) {
+        return choice(char.toLowerCase(), char.toUpperCase());
+      }
+      return char;
+    }),
   );
 }
 
@@ -158,6 +158,8 @@ module.exports = grammar({
         $.statement_declaration,
         $.module_declaration,
         $.type_declaration,
+        $.field_declaration,
+        $.variable_declaration,
         $.record_declaration,
         $.method_call,
         $.function_call,
@@ -167,31 +169,92 @@ module.exports = grammar({
     bare_item: ($) =>
       seq(
         choice(
-        $.variable,
-        $.type,
-        $.constant,
-        $.keyword,
-        $.operator,
-        $.string,
-        $.number,
-        $.identifier,
-        $.punctuation,
-        $.unknown,
+          $.variable,
+          $.type,
+          $.constant,
+          $.modifier,
+          $.keyword,
+          $.operator,
+          $.string,
+          $.number,
+          $.identifier,
+          $.punctuation,
+          $.unknown,
         ),
       ),
 
     function_declaration: ($) =>
-      prec.right(2, seq(field("kind", $.function_keyword), field("name", $.identifier), optional($.parameter_list))),
+      prec.right(
+        2,
+        seq(
+          $.declaration_prefix,
+          field("kind", $.function_keyword),
+          field("name", $.identifier),
+          optional($.parameter_list),
+          optional($.return_type),
+        ),
+      ),
 
     statement_declaration: ($) =>
-      prec.right(2, seq(field("kind", $.statement_keyword), field("name", $.identifier), optional($.parameter_list))),
+      prec.right(
+        2,
+        seq(
+          $.declaration_prefix,
+          field("kind", $.statement_keyword),
+          field("name", $.identifier),
+          optional($.parameter_list),
+        ),
+      ),
 
-    module_declaration: ($) => seq(field("kind", $.module_keyword), field("name", $.identifier)),
+    module_declaration: ($) =>
+      seq(
+        $.declaration_prefix,
+        field("kind", $.module_keyword),
+        optional($.interface_keyword),
+        field("name", $.identifier),
+      ),
 
     type_declaration: ($) =>
-      prec.right(1, seq(field("kind", $.type_keyword), field("name", $.identifier), optional($.record_keyword))),
+      prec.right(
+        1,
+        seq(
+          $.declaration_prefix,
+          field("kind", $.type_keyword),
+          field("name", $.identifier),
+          optional($.record_keyword),
+        ),
+      ),
 
-    record_declaration: ($) => seq(field("kind", $.record_keyword), field("name", $.identifier)),
+    record_declaration: ($) =>
+      seq($.declaration_prefix, field("kind", $.record_keyword), field("name", $.identifier)),
+
+    field_declaration: ($) =>
+      prec.right(
+        1,
+        seq(
+          $.declaration_prefix,
+          $.field_keyword,
+          field("name", $.variable),
+          optional($.type_spec),
+        ),
+      ),
+
+    variable_declaration: ($) =>
+      prec.right(
+        1,
+        seq(
+          $.declaration_prefix,
+          optional($.variable_keyword),
+          field("name", $.variable),
+          optional($.type_spec),
+        ),
+      ),
+
+    declaration_prefix: ($) => seq($.declare_keyword, optional($.public_keyword)),
+
+    return_type: ($) => $.type_spec,
+
+    type_spec: ($) => choice($.type, seq($.record_keyword, $.identifier)),
 
     parameter_list: ($) => seq("(", repeat($._parameter_item), ")"),
 
@@ -199,8 +262,9 @@ module.exports = grammar({
       choice(
         $.method_call,
         $.function_call,
+        $.type_spec,
         $.variable,
-        $.type,
+        $.modifier,
         $.constant,
         $.keyword,
         $.operator,
@@ -217,20 +281,27 @@ module.exports = grammar({
     method_call: ($) =>
       prec.right(2, seq(field("receiver", $.identifier), ".", field("method", $.identifier), optional($.parameter_list))),
 
+    declare_keyword: () => token(prec(5, ci("DECLARE"))),
+    public_keyword: () => token(prec(5, ci("PUBLIC"))),
+    interface_keyword: () => token(prec(5, ci("INTERFACE"))),
+    field_keyword: () => token(prec(5, ci("FIELD"))),
+    variable_keyword: () => token(prec(5, ci("VARIABLE"))),
     function_keyword: () => token(prec(4, ci("FUNCTION"))),
     statement_keyword: () => token(prec(4, ci("STATEMENT"))),
     module_keyword: () => token(prec(4, ci("MODULE"))),
     type_keyword: () => token(prec(4, ci("TYPE"))),
     record_keyword: () => token(prec(4, ci("RECORD"))),
 
+    modifier: () => token(prec(3, ciChoice(MODIFIERS))),
     keyword: () => token(prec(2, ciChoice(KEYWORDS))),
     type: () => token(prec(3, ciChoice(TYPES))),
     constant: () => token(prec(3, ciChoice(CONSTANTS))),
     operator: () => token(choice(...SYMBOL_OPERATORS, ciChoice(WORD_OPERATORS))),
 
-    variable: () => token(seq("$", /[A-Za-z0-9_-]*/)),
-    identifier: () => /[A-Za-z_][A-Za-z0-9_-]*/,
-    number: () => token(seq(optional("-"), /\d+/, optional(seq(".", /\d*/)))),
+    variable: () => token(seq("$", repeat(choice(...VARIABLE_CONTINUE)))),
+    identifier: () => token(seq(choice(...IDENT_START), repeat(choice(...IDENT_CONTINUE)))),
+    number: () =>
+      token(seq(optional("-"), repeat1(choice(...DIGITS)), optional(seq(".", repeat(choice(...DIGITS)))))),
 
     string: ($) =>
       seq(

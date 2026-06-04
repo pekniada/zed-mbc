@@ -1,4 +1,15 @@
 ; Declarations and outline-worthy names
+(declaration_prefix
+  [
+    (declare_keyword)
+    (public_keyword)
+  ] @keyword)
+
+(interface_keyword) @keyword
+(modifier) @keyword
+(field_keyword) @keyword
+(variable_keyword) @keyword
+
 (function_declaration
   kind: (function_keyword) @keyword
   name: (identifier) @function)
@@ -20,6 +31,16 @@
   name: (identifier) @type)
 
 (record_keyword) @type.builtin
+
+(field_declaration
+  name: (variable) @variable.special)
+
+(variable_declaration
+  name: (variable) @variable.special)
+
+(type_spec
+  (record_keyword) @type.builtin
+  (identifier) @type)
 
 ; Calls and member access
 (function_call

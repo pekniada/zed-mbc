@@ -1,26 +1,31 @@
 # Example MBC file used for parser and query checks.
-MODULE DemoModule
+DECLARE MODULE INTERFACE DemoModule
 
-TYPE Customer RECORD
-FIELD $customer_id STRING
-FIELD $balance EXTENDER_FLOAT
+DECLARE RECORD Configuration {
+    DECLARE FIELD $SolutionName STRING;
+    DECLARE FIELD $Timeout INTEGER;
+}
 
-FUNCTION CalculateBalance($customer_id)
-    IF $customer_id <> null
-        LOG("Loading customer")
-        DATABASE.READ($customer_id)
-        RETURN True
-    ELSE
-        PRINTERR("Missing customer id")
-        RETURN False
-    END
-END
+DECLARE FUNCTION
+CalculateBalance($customer_id RECORD Configuration) RECORD Configuration
+{
+    DECLARE $Config RECORD Configuration;
+    IF $customer_id <> null {
+        LOG("Loading customer");
+        DATABASE.READ($customer_id);
+        RETURN $Config;
+    } ELSE {
+        PRINTERR("Missing customer id");
+        RETURN $Config;
+    }
+}
 
-STATEMENT ExportCustomer
-    EXEC_SQL("select * from customer")
-    SOCKET.PUT("ok")
-END
+DECLARE STATEMENT
+ExportCustomer IN $Config RECORD Configuration
+{
+    EXEC_SQL("select * from customer");
+    SOCKET.PUT("ok");
+}
 
 /* Block comment with nested-looking markers.
    The grammar keeps it as one comment token. */
-RECORD AuditEntry
