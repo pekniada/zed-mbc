@@ -1,6 +1,5 @@
 const KEYWORDS = [
   "ALERTER",
-  "AND",
   "ARGUMENT",
   "ARGUMENTCOUNT",
   "BREAK",
@@ -42,7 +41,6 @@ const KEYWORDS = [
   "NOLOG",
   "ONCE",
   "OPEN",
-  "OR",
   "OTHERS",
   "OUT",
   "OUTPUT",
@@ -68,7 +66,6 @@ const KEYWORDS = [
   "UNSERIALIZE",
   "WHEN",
   "WHILE",
-  "XOR",
 ];
 
 const TYPES = [
@@ -167,20 +164,18 @@ module.exports = grammar({
       ),
 
     bare_item: ($) =>
-      seq(
-        choice(
-          $.variable,
-          $.type,
-          $.constant,
-          $.modifier,
-          $.keyword,
-          $.operator,
-          $.string,
-          $.number,
-          $.identifier,
-          $.punctuation,
-          $.unknown,
-        ),
+      choice(
+        $.variable,
+        $.type,
+        $.constant,
+        $.modifier,
+        $.keyword,
+        $.operator,
+        $.string,
+        $.number,
+        $.identifier,
+        $.punctuation,
+        $.unknown,
       ),
 
     function_declaration: ($) =>
