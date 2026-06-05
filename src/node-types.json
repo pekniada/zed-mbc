@@ -55,6 +55,11 @@
     }
   },
   {
+    "type": "constant",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "declaration_prefix",
     "named": true,
     "fields": {},
@@ -178,6 +183,11 @@
     }
   },
   {
+    "type": "keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "method_call",
     "named": true,
     "fields": {
@@ -212,6 +222,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "modifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "module_declaration",
@@ -254,6 +269,32 @@
     }
   },
   {
+    "type": "module_variable_access",
+    "named": true,
+    "fields": {
+      "module": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "parameter_list",
     "named": true,
     "fields": {},
@@ -283,6 +324,10 @@
         },
         {
           "type": "modifier",
+          "named": true
+        },
+        {
+          "type": "module_variable_access",
           "named": true
         },
         {
@@ -415,6 +460,10 @@
           "named": true
         },
         {
+          "type": "module_variable_access",
+          "named": true
+        },
+        {
           "type": "record_declaration",
           "named": true
         },
@@ -487,6 +536,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "type",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "type_declaration",
@@ -614,6 +668,554 @@
     "named": false
   },
   {
+    "type": "ALERTER",
+    "named": false
+  },
+  {
+    "type": "ALTER",
+    "named": false
+  },
+  {
+    "type": "APPEND",
+    "named": false
+  },
+  {
+    "type": "ARGUMENT",
+    "named": false
+  },
+  {
+    "type": "ARGUMENTCOUNT",
+    "named": false
+  },
+  {
+    "type": "ARRAYDIM",
+    "named": false
+  },
+  {
+    "type": "ARRAYSIZE",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
+    "type": "BEGIN",
+    "named": false
+  },
+  {
+    "type": "BLOCK",
+    "named": false
+  },
+  {
+    "type": "BREAK",
+    "named": false
+  },
+  {
+    "type": "CALL",
+    "named": false
+  },
+  {
+    "type": "CASE",
+    "named": false
+  },
+  {
+    "type": "CATCH",
+    "named": false
+  },
+  {
+    "type": "CHAR",
+    "named": false
+  },
+  {
+    "type": "CHARACTER",
+    "named": false
+  },
+  {
+    "type": "CHECK_OCCURRENCES",
+    "named": false
+  },
+  {
+    "type": "CLOSE",
+    "named": false
+  },
+  {
+    "type": "CODE",
+    "named": false
+  },
+  {
+    "type": "COMMIT",
+    "named": false
+  },
+  {
+    "type": "COMPOSITE",
+    "named": false
+  },
+  {
+    "type": "CONSTANT",
+    "named": false
+  },
+  {
+    "type": "CONTAINER",
+    "named": false
+  },
+  {
+    "type": "CONTINUE",
+    "named": false
+  },
+  {
+    "type": "COPY",
+    "named": false
+  },
+  {
+    "type": "CURRENTDATE",
+    "named": false
+  },
+  {
+    "type": "DATABASE",
+    "named": false
+  },
+  {
+    "type": "DATE",
+    "named": false
+  },
+  {
+    "type": "DBID",
+    "named": false
+  },
+  {
+    "type": "DEBUG",
+    "named": false
+  },
+  {
+    "type": "DELETE",
+    "named": false
+  },
+  {
+    "type": "DETECT_UNPARSED_DATA",
+    "named": false
+  },
+  {
+    "type": "DOUBLE",
+    "named": false
+  },
+  {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "END",
+    "named": false
+  },
+  {
+    "type": "EXECUTE",
+    "named": false
+  },
+  {
+    "type": "EXEC_SQL",
+    "named": false
+  },
+  {
+    "type": "EXIT",
+    "named": false
+  },
+  {
+    "type": "EXPAND",
+    "named": false
+  },
+  {
+    "type": "EXPORT",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_FLOAT",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_FLOAT_VECTOR",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_INTEGER",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_INTEGER_VECTOR",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_STRING",
+    "named": false
+  },
+  {
+    "type": "EXTENDER_STRING_VECTOR",
+    "named": false
+  },
+  {
+    "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FAULT_TOLERANCE_LEVEL",
+    "named": false
+  },
+  {
+    "type": "FIDENT",
+    "named": false
+  },
+  {
+    "type": "FILE",
+    "named": false
+  },
+  {
+    "type": "FILES",
+    "named": false
+  },
+  {
+    "type": "FLOAT",
+    "named": false
+  },
+  {
+    "type": "FLOAT_VECTOR",
+    "named": false
+  },
+  {
+    "type": "FOLDERTYPE",
+    "named": false
+  },
+  {
+    "type": "FOR",
+    "named": false
+  },
+  {
+    "type": "FORMAT",
+    "named": false
+  },
+  {
+    "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "GETDATE",
+    "named": false
+  },
+  {
+    "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IMPORT",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
+    "type": "INCLUDE",
+    "named": false
+  },
+  {
+    "type": "INFO",
+    "named": false
+  },
+  {
+    "type": "INPUT",
+    "named": false
+  },
+  {
+    "type": "INSERT",
+    "named": false
+  },
+  {
+    "type": "INTEGER",
+    "named": false
+  },
+  {
+    "type": "INTEGER_VECTOR",
+    "named": false
+  },
+  {
+    "type": "INTERP_VERSION",
+    "named": false
+  },
+  {
+    "type": "INTO",
+    "named": false
+  },
+  {
+    "type": "LOAD",
+    "named": false
+  },
+  {
+    "type": "LOADPGM",
+    "named": false
+  },
+  {
+    "type": "LOG",
+    "named": false
+  },
+  {
+    "type": "LOG_NAME",
+    "named": false
+  },
+  {
+    "type": "LOOP",
+    "named": false
+  },
+  {
+    "type": "MAIN",
+    "named": false
+  },
+  {
+    "type": "MAPOBJNAME",
+    "named": false
+  },
+  {
+    "type": "MSINFO",
+    "named": false
+  },
+  {
+    "type": "NOLOG",
+    "named": false
+  },
+  {
+    "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "ONCE",
+    "named": false
+  },
+  {
+    "type": "OPEN",
+    "named": false
+  },
+  {
+    "type": "OTHERS",
+    "named": false
+  },
+  {
+    "type": "OUT",
+    "named": false
+  },
+  {
+    "type": "OUTPUT",
+    "named": false
+  },
+  {
+    "type": "PGMINFO",
+    "named": false
+  },
+  {
+    "type": "PIPE",
+    "named": false
+  },
+  {
+    "type": "PRAGMA",
+    "named": false
+  },
+  {
+    "type": "PRIMITIVE",
+    "named": false
+  },
+  {
+    "type": "PRINT",
+    "named": false
+  },
+  {
+    "type": "PRINTERR",
+    "named": false
+  },
+  {
+    "type": "PROGRAMINFO",
+    "named": false
+  },
+  {
+    "type": "READ",
+    "named": false
+  },
+  {
+    "type": "REGEXP",
+    "named": false
+  },
+  {
+    "type": "REGISTER",
+    "named": false
+  },
+  {
+    "type": "RELEASE",
+    "named": false
+  },
+  {
+    "type": "REPEAT",
+    "named": false
+  },
+  {
+    "type": "RETURN",
+    "named": false
+  },
+  {
+    "type": "ROLLBACK",
+    "named": false
+  },
+  {
+    "type": "SCAN",
+    "named": false
+  },
+  {
+    "type": "SEGMENT",
+    "named": false
+  },
+  {
+    "type": "SEGMENTGROUP",
+    "named": false
+  },
+  {
+    "type": "SELECT",
+    "named": false
+  },
+  {
+    "type": "SERIALIZE",
+    "named": false
+  },
+  {
+    "type": "SETDATE",
+    "named": false
+  },
+  {
+    "type": "SIDENT",
+    "named": false
+  },
+  {
+    "type": "SLEEP",
+    "named": false
+  },
+  {
+    "type": "SOURCEFILE",
+    "named": false
+  },
+  {
+    "type": "SOURCELINE",
+    "named": false
+  },
+  {
+    "type": "SOURCEMODULE",
+    "named": false
+  },
+  {
+    "type": "SOURCEPROCEDURE",
+    "named": false
+  },
+  {
+    "type": "SPLIT",
+    "named": false
+  },
+  {
+    "type": "STRBACKWARD",
+    "named": false
+  },
+  {
+    "type": "STRFORWARD",
+    "named": false
+  },
+  {
+    "type": "STRING",
+    "named": false
+  },
+  {
+    "type": "STRING_VECTOR",
+    "named": false
+  },
+  {
+    "type": "STRLEN",
+    "named": false
+  },
+  {
+    "type": "STRMID",
+    "named": false
+  },
+  {
+    "type": "STRREPEAT",
+    "named": false
+  },
+  {
+    "type": "SUBSTRING",
+    "named": false
+  },
+  {
+    "type": "SUSPEND",
+    "named": false
+  },
+  {
+    "type": "SWITCH",
+    "named": false
+  },
+  {
+    "type": "SYSTEM",
+    "named": false
+  },
+  {
+    "type": "THROW",
+    "named": false
+  },
+  {
+    "type": "TO",
+    "named": false
+  },
+  {
+    "type": "TRIMLEFT",
+    "named": false
+  },
+  {
+    "type": "TRIMRIGHT",
+    "named": false
+  },
+  {
+    "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "TRY",
+    "named": false
+  },
+  {
+    "type": "UNLOADPGM",
+    "named": false
+  },
+  {
+    "type": "UNSERIALIZE",
+    "named": false
+  },
+  {
+    "type": "UPDATE",
+    "named": false
+  },
+  {
+    "type": "VOID",
+    "named": false
+  },
+  {
+    "type": "WHEN",
+    "named": false
+  },
+  {
+    "type": "WHERE",
+    "named": false
+  },
+  {
+    "type": "WHILE",
+    "named": false
+  },
+  {
+    "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "WRITE",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -625,10 +1227,6 @@
     "type": "block_comment",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "constant",
-    "named": true
   },
   {
     "type": "declare_keyword",
@@ -655,17 +1253,9 @@
     "named": true
   },
   {
-    "type": "keyword",
-    "named": true
-  },
-  {
     "type": "line_comment",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "modifier",
-    "named": true
   },
   {
     "type": "module_keyword",
@@ -689,10 +1279,6 @@
   },
   {
     "type": "statement_keyword",
-    "named": true
-  },
-  {
-    "type": "type",
     "named": true
   },
   {

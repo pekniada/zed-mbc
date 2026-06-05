@@ -85,7 +85,7 @@ ExportCustomer IN $Config RECORD Configuration
   (bare_item
     (keyword))
   (bare_item
-    (constant))
+    (identifier))
   (bare_item
     (punctuation))
   (statement_declaration
@@ -103,13 +103,10 @@ ExportCustomer IN $Config RECORD Configuration
     (identifier))
   (bare_item
     (punctuation))
-  (bare_item
-    (keyword))
-  (bare_item
-    (punctuation))
-  (bare_item
-    (string))
-  (bare_item
-    (punctuation))
+  (method_call
+    receiver: (identifier)
+    method: (identifier)
+    (parameter_list
+      (string)))
   (bare_item
     (punctuation)))

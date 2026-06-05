@@ -1,11 +1,12 @@
 id = "mbc"
 name = "MBC"
-version = "0.1.0"
+version = "0.1.1"
 schema_version = 1
-authors = ["Vili <https://github.com/vilikng>", "Codex port for Zed"]
-description = "MBC language support for Zed, ported from the VS Code MBC syntax extension."
+authors = ["Jakub B, Adam P w/ Codex and GH Copilot"]
+description = "MBC language support for Zed"
 repository = "https://github.com/bravajak/zed-mbc"
 
 [grammars.mbc]
 repository = "https://github.com/bravajak/zed-mbc.git"
 rev = "main"
+path = "."

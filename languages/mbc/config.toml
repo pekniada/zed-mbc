@@ -1,6 +1,6 @@
 name = "MBC"
 grammar = "mbc"
-path_suffixes = ["s4", "s4h", "s4m"]
+path_suffixes = ["s4", "s4f", "s4h", "s4m"]
 line_comments = ["# "]
 block_comment = ["/* ", " */"]
 autoclose_before = ")]};, \n\t"

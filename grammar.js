@@ -1,41 +1,64 @@
 const KEYWORDS = [
   "ALERTER",
+  "ALTER",
+  "APPEND",
   "ARGUMENT",
   "ARGUMENTCOUNT",
+  "ARRAYDIM",
+  "ARRAYSIZE",
+  "AS",
+  "BEGIN",
+  "BLOCK",
   "BREAK",
   "CALL",
   "CASE",
   "CATCH",
   "CHECK_OCCURRENCES",
   "CLOSE",
+  "CODE",
+  "COMMIT",
+  "COMPOSITE",
   "CONTAINER",
+  "CONTINUE",
+  "COPY",
+  "CURRENTDATE",
   "DATABASE",
+  "DBID",
   "DEBUG",
+  "DELETE",
   "DETECT_UNPARSED_DATA",
   "ELSE",
   "END",
   "EXEC_SQL",
   "EXECUTE",
   "EXIT",
+  "EXPAND",
   "EXPORT",
   "FAULT_TOLERANCE_LEVEL",
-  "FIELD",
+  "FIDENT",
+  // NOTE: FIELD omitted — handled by dedicated field_keyword rule
   "FILE",
   "FILES",
   "FOLDERTYPE",
   "FOR",
+  "FORMAT",
+  "FROM",
+  "GETDATE",
   "IF",
   "IMPORT",
   "IN",
   "INCLUDE",
   "INFO",
   "INPUT",
+  "INSERT",
+  "INTERP_VERSION",
   "INTO",
   "LOAD",
   "LOADPGM",
   "LOG",
   "LOG_NAME",
   "LOOP",
+  "MAIN",
   "MAPOBJNAME",
   "MSINFO",
   "NOLOG",
@@ -44,40 +67,68 @@ const KEYWORDS = [
   "OTHERS",
   "OUT",
   "OUTPUT",
+  "PGMINFO",
+  "PIPE",
+  "PRAGMA",
   "PRINT",
   "PRINTERR",
+  "PROGRAMINFO",
   "READ",
+  "REGEXP",
   "REGISTER",
   "RELEASE",
+  "REPEAT",
   "RETURN",
+  "ROLLBACK",
+  "SCAN",
+  "SEGMENT",
+  "SEGMENTGROUP",
+  "SELECT",
   "SERIALIZE",
+  "SETDATE",
+  "SIDENT",
   "SLEEP",
-  "SOCKET.ACCEPT",
-  "SOCKET.GET",
-  "SOCKET.NGET",
-  "SOCKET.NPUT",
-  "SOCKET.PUT",
+  "SOURCEFILE",
+  "SOURCELINE",
+  "SOURCEMODULE",
+  "SOURCEPROCEDURE",
+  "SPLIT",
+  "STRBACKWARD",
+  "STRFORWARD",
+  "STRLEN",
+  "STRMID",
+  "STRREPEAT",
+  "SUBSTRING",
   "SUSPEND",
   "SWITCH",
+  "SYSTEM",
   "THROW",
   "TO",
+  "TRIMLEFT",
+  "TRIMRIGHT",
   "TRY",
   "UNLOADPGM",
   "UNSERIALIZE",
+  "UPDATE",
   "WHEN",
+  "WHERE",
   "WHILE",
+  "WITH",
+  "WRITE",
 ];
 
 const TYPES = [
   "CHAR",
-  "CONSTANT",
+  "CHARACTER",
   "DATE",
+  "DOUBLE",
   "EXTENDER_FLOAT",
   "EXTENDER_FLOAT_VECTOR",
   "EXTENDER_INTEGER",
   "EXTENDER_INTEGER_VECTOR",
   "EXTENDER_STRING",
   "EXTENDER_STRING_VECTOR",
+  "FLOAT",
   "FLOAT_VECTOR",
   "INTEGER",
   "INTEGER_VECTOR",
@@ -89,7 +140,10 @@ const TYPES = [
 
 const CONSTANTS = ["FALSE", "NULL", "TRUE"];
 
-const MODIFIERS = ["PUBLIC", "INTERFACE"];
+// NOTE: PUBLIC and INTERFACE omitted from MODIFIERS — both have dedicated structural
+// keyword rules (public_keyword, interface_keyword) that handle them in declaration
+// contexts. Including them here as anonymous tokens would cause conflicts.
+const MODIFIERS = ["CONSTANT"];
 
 const WORD_OPERATORS = [
   "AND",
@@ -158,6 +212,7 @@ module.exports = grammar({
         $.field_declaration,
         $.variable_declaration,
         $.record_declaration,
+        $.module_variable_access,
         $.method_call,
         $.function_call,
         $.bare_item,
@@ -255,6 +310,7 @@ module.exports = grammar({
 
     _parameter_item: ($) =>
       choice(
+        $.module_variable_access,
         $.method_call,
         $.function_call,
         $.type_spec,
@@ -273,6 +329,11 @@ module.exports = grammar({
 
     function_call: ($) => prec(2, seq(field("name", $.identifier), $.parameter_list)),
 
+    // Handles MODULE.$variable — e.g. TIX_TRANSFER.$TIXTransferEntryType
+    // Must be defined before method_call to win the prec.right(2) tie on `identifier .`
+    module_variable_access: ($) =>
+      prec(3, seq(field("module", $.identifier), ".", field("name", $.variable))),
+
     method_call: ($) =>
       prec.right(2, seq(field("receiver", $.identifier), ".", field("method", $.identifier), optional($.parameter_list))),
 
@@ -287,10 +348,15 @@ module.exports = grammar({
     type_keyword: () => token(prec(4, ci("TYPE"))),
     record_keyword: () => token(prec(4, ci("RECORD"))),
 
-    modifier: () => token(prec(3, ciChoice(MODIFIERS))),
-    keyword: () => token(prec(2, ciChoice(KEYWORDS))),
-    type: () => token(prec(3, ciChoice(TYPES))),
-    constant: () => token(prec(3, ciChoice(CONSTANTS))),
+    // Keyword, type, constant, modifier rules use plain string literals (anonymous tokens).
+    // This lets tree-sitter's word/identifier extraction enforce word boundaries:
+    // "InvalidServices" won't match "IN" because the full identifier text != "IN".
+    // Structural keywords (declare_keyword, public_keyword etc.) keep token(prec()) for
+    // case-insensitive matching inside declaration rules.
+    modifier: ($) => choice(...MODIFIERS),
+    keyword: ($) => choice(...KEYWORDS),
+    type: ($) => choice(...TYPES),
+    constant: ($) => choice(...CONSTANTS),
     operator: () => token(choice(...SYMBOL_OPERATORS, ciChoice(WORD_OPERATORS))),
 
     variable: () => token(seq("$", repeat(choice(...VARIABLE_CONTINUE)))),
